@@ -1,0 +1,10 @@
+{
+  "title": "پروژه‌های پیشرفته BLE: OTA، Mesh، Long Range و پروتکل اختصاصی",
+  "slug": "ble-advanced-projects-ota-mesh-long-range",
+  "category": "آموزش جامع BLE",
+  "summary": "DFU و OTA امن، BLE Mesh، Long Range، Streaming، پروتکل اختصاصی روی GATT و چند اتصال را با نگاه معماری بررسی کنید.",
+  "seo_title": "پروژه پیشرفته BLE | OTA، Mesh، Long Range و Streaming",
+  "seo_description": "راهنمای پروژه‌های پیشرفته BLE شامل DFU و OTA، Bluetooth Mesh، LE Coded Long Range، Streaming Data، پروتکل اختصاصی و چند اتصال.",
+  "status": "published",
+  "stage": 18
+}

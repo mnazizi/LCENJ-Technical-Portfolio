@@ -1,0 +1,10 @@
+{
+  "title": "UUID در BLE: تفاوت UUID16، UUID32 و UUID128 و طراحی سرویس اختصاصی",
+  "slug": "ble-uuid-standard-custom-service",
+  "category": "آموزش جامع BLE",
+  "summary": "UUIDهای استاندارد و اختصاصی را بشناسید، سرویس‌های Battery و Device Information را استفاده کنید و برای محصول خود UUID128 منظم طراحی کنید.",
+  "seo_title": "UUID در BLE چیست؟ | UUID16 و UUID128 و سرویس اختصاصی",
+  "seo_description": "آموزش UUID در Bluetooth Low Energy، تفاوت UUID16 و UUID128، سرویس‌های استاندارد و روش طراحی UUID اختصاصی برای محصول.",
+  "status": "published",
+  "stage": 10
+}

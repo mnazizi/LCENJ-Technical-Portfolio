@@ -1,0 +1,10 @@
+{
+  "title": "BLE در STM32WB: راه‌اندازی CubeMX، ساخت Service و Low Power",
+  "slug": "stm32wb-ble-cubemx-service-notify",
+  "category": "آموزش جامع BLE",
+  "summary": "معماری دو هسته‌ای STM32WB، تنظیم CubeMX، ساخت Service و Characteristic، ارسال Notify، مدیریت اتصال و حالت کم‌مصرف را بیاموزید.",
+  "seo_title": "آموزش BLE در STM32WB | CubeMX، GATT Service و Notify",
+  "seo_description": "راهنمای BLE در STM32WB؛ پیکربندی STM32CubeMX، Wireless Stack، ساخت سرویس و Characteristic، Notify، اتصال و Low Power Mode.",
+  "status": "published",
+  "stage": 13
+}

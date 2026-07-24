@@ -1,0 +1,10 @@
+{
+  "title": "بهینه‌سازی BLE: افزایش Throughput و کاهش Latency و مصرف باتری",
+  "slug": "ble-performance-throughput-latency-power",
+  "category": "آموزش جامع BLE",
+  "summary": "MTU، Data Length، PHY و Connection Parameter را هماهنگ تنظیم کنید و میان سرعت، تأخیر، پایداری و انرژی تعادل قابل اندازه‌گیری بسازید.",
+  "seo_title": "بهینه‌سازی BLE | Throughput، Latency، MTU و مصرف باتری",
+  "seo_description": "راهنمای بهینه‌سازی Bluetooth Low Energy با MTU Negotiation، Data Length Extension، PHY Update، Connection Parameters و اندازه‌گیری توان.",
+  "status": "published",
+  "stage": 15
+}

@@ -1,0 +1,10 @@
+{
+  "title": "لایه فیزیکی BLE: فرکانس، کانال‌ها، PHY و پرش فرکانسی",
+  "slug": "ble-physical-layer-channels-phy",
+  "category": "آموزش جامع BLE",
+  "summary": "با باند 2.4 گیگاهرتز، 40 کانال BLE، مدولاسیون GFSK، حالت‌های 1M و 2M و LE Coded و نقش Channel Hopping آشنا شوید.",
+  "seo_title": "لایه فیزیکی BLE | کانال‌ها، 1M، 2M و LE Coded PHY",
+  "seo_description": "آموزش لایه PHY در Bluetooth Low Energy؛ باند 2.4GHz، کانال‌های Advertising و Data، GFSK، برد، سرعت و پرش فرکانسی.",
+  "status": "published",
+  "stage": 2
+}

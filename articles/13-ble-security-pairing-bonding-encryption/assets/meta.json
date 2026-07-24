@@ -1,0 +1,10 @@
+{
+  "title": "امنیت BLE: Pairing، Bonding، Encryption و حریم خصوصی آدرس",
+  "slug": "ble-security-pairing-bonding-encryption",
+  "category": "آموزش جامع BLE",
+  "summary": "روش‌های Pairing، تفاوت Bonding و Encryption، کلیدهای LTK و IRK و انتخاب Just Works، Passkey یا Numeric Comparison را یاد بگیرید.",
+  "seo_title": "امنیت BLE | Pairing، Bonding، Encryption و کلیدهای LTK و IRK",
+  "seo_description": "آموزش امنیت Bluetooth Low Energy؛ Pairing، Bonding، رمزنگاری، احراز هویت، Just Works، Passkey، Numeric Comparison و Privacy Address.",
+  "status": "published",
+  "stage": 11
+}

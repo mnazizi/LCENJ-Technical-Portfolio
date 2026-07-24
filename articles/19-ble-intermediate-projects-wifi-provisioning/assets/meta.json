@@ -1,0 +1,10 @@
+{
+  "title": "پروژه‌های متوسط BLE: تنظیم Wi-Fi، ارتباط دو ESP32 و اپ موبایل",
+  "slug": "ble-intermediate-projects-wifi-provisioning",
+  "category": "آموزش جامع BLE",
+  "summary": "با BLE اطلاعات Wi-Fi را تنظیم کنید، دو ESP32 را متصل کنید، اپ اندروید بسازید، تنظیمات را ذخیره و قطع و وصل را مدیریت کنید.",
+  "seo_title": "پروژه متوسط BLE | Wi-Fi Provisioning و ارتباط دو ESP32",
+  "seo_description": "آموزش پروژه‌های متوسط BLE شامل تنظیم Wi-Fi از طریق Bluetooth، ارتباط دو ESP32، اپ اندروید، ذخیره تنظیمات و مدیریت Reconnect.",
+  "status": "published",
+  "stage": 17
+}

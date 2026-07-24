@@ -1,0 +1,10 @@
+{
+  "title": "پروتکل ATT در BLE: Attribute، Handle، Read، Write و MTU",
+  "slug": "ble-att-protocol-handle-mtu",
+  "category": "آموزش جامع BLE",
+  "summary": "Attribute و Handle را درک کنید، Read و Write و Error Response را بشناسید و اثر MTU را با تحلیل پکت ATT در Wireshark ببینید.",
+  "seo_title": "پروتکل ATT در BLE | Handle، Read، Write و MTU",
+  "seo_description": "آموزش Attribute Protocol در BLE؛ ساختار Attribute، Handle، Read و Write، Error Response، MTU و تحلیل بسته‌های ATT در Wireshark.",
+  "status": "published",
+  "stage": 8
+}

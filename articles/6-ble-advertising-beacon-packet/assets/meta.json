@@ -1,0 +1,10 @@
+{
+  "title": "Advertising در BLE: انواع تبلیغ، Beacon و ساخت داده Advertising",
+  "slug": "ble-advertising-beacon-packet",
+  "category": "آموزش جامع BLE",
+  "summary": "دستگاه BLE چگونه دیده می‌شود؟ انواع Advertising، Scan Response، Beacon و ساخت Flags، Local Name، UUID و Manufacturer Data را بیاموزید.",
+  "seo_title": "آموزش BLE Advertising | ساخت Beacon و Advertising Packet",
+  "seo_description": "آموزش کامل Advertising در BLE؛ انواع تبلیغ، Scan Request و Response، iBeacon و Eddystone و ساخت Flags، UUID و Manufacturer Data.",
+  "status": "published",
+  "stage": 4
+}

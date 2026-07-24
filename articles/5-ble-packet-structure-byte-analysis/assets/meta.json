@@ -1,0 +1,10 @@
+{
+  "title": "ساختار پکت BLE و تحلیل بایت‌به‌بایت بسته‌ها",
+  "slug": "ble-packet-structure-byte-analysis",
+  "category": "آموزش جامع BLE",
+  "summary": "اجزای Preamble، Access Address، Header، Payload و CRC را یاد بگیرید و یک بسته BLE را قدم‌به‌قدم از روی بایت‌ها تحلیل کنید.",
+  "seo_title": "ساختار پکت BLE | تحلیل Header، Payload و CRC",
+  "seo_description": "آموزش ساختار بسته Bluetooth Low Energy از Preamble تا CRC، تحلیل بایت‌به‌بایت Advertising و زمان‌بندی IFS و توالی پکت‌ها.",
+  "status": "published",
+  "stage": 3
+}

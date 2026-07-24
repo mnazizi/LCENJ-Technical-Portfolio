@@ -1,0 +1,10 @@
+{
+  "title": "GATT در BLE: طراحی Service، Characteristic، Descriptor و Notify",
+  "slug": "ble-gatt-service-characteristic-notify",
+  "category": "آموزش جامع BLE",
+  "summary": "ساختار GATT را از Service تا Characteristic و Descriptor یاد بگیرید و تفاوت Read، Write، Notify و Indicate را در یک سنسور واقعی ببینید.",
+  "seo_title": "آموزش GATT در BLE | Service، Characteristic، Notify و Indicate",
+  "seo_description": "راهنمای طراحی GATT در Bluetooth Low Energy؛ سرویس، مشخصه، Descriptor، CCCD، Read، Write، Notify و تفاوت Notify با Indicate.",
+  "status": "published",
+  "stage": 9
+}

@@ -1,0 +1,10 @@
+{
+  "title": "نقش‌های BLE در GAP: Peripheral، Central، Broadcaster و Observer",
+  "slug": "ble-gap-roles-central-peripheral",
+  "category": "آموزش جامع BLE",
+  "summary": "چه کسی تبلیغ می‌کند، چه کسی اسکن می‌کند و نقش Central و Peripheral در سناریوهای گوشی، سنسور، دو ESP32 و Beacon چیست؟",
+  "seo_title": "نقش‌های BLE در GAP | تفاوت Central و Peripheral",
+  "seo_description": "آموزش نقش‌های GAP در Bluetooth Low Energy؛ Peripheral، Central، Broadcaster و Observer همراه با سناریوهای گوشی، سنسور و ESP32.",
+  "status": "published",
+  "stage": 5
+}

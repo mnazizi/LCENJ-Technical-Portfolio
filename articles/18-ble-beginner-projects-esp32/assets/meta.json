@@ -1,0 +1,10 @@
+{
+  "title": "پروژه‌های عملی BLE برای شروع: LED، دماسنج، باتری و Beacon",
+  "slug": "ble-beginner-projects-esp32",
+  "category": "آموزش جامع BLE",
+  "summary": "شش پروژه ساده BLE را با ESP32 شروع کنید: کنترل LED، دماسنج، مانیتور باتری، رطوبت‌سنج، Beacon و ارسال داده به موبایل.",
+  "seo_title": "پروژه BLE با ESP32 | LED، دماسنج، باتری و Beacon",
+  "seo_description": "آموزش پروژه‌های ساده Bluetooth Low Energy با ESP32؛ کنترل LED، دماسنج BLE، باتری مانیتور، سنسور رطوبت و Beacon.",
+  "status": "published",
+  "stage": 16
+}

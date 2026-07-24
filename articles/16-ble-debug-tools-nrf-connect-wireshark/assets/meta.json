@@ -1,0 +1,10 @@
+{
+  "title": "ابزارهای تحلیل BLE: nRF Connect، Sniffer و Wireshark از صفر",
+  "slug": "ble-debug-tools-nrf-connect-wireshark",
+  "category": "آموزش جامع BLE",
+  "summary": "با nRF Connect دستگاه را اسکن و GATT را آزمایش کنید، Capture بگیرید، پکت‌ها را در Wireshark فیلتر کنید و RSSI و Throughput را بسنجید.",
+  "seo_title": "ابزارهای تحلیل BLE | nRF Connect، Sniffer و Wireshark",
+  "seo_description": "آموزش ابزارهای دیباگ BLE شامل nRF Connect، nRF Sniffer، Wireshark، تحلیل Packet، RSSI و اندازه‌گیری Throughput.",
+  "status": "published",
+  "stage": 14
+}

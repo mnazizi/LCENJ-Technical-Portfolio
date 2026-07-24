@@ -1,0 +1,10 @@
+{
+  "title": "اتصال در BLE: مراحل Connect، پارامترهای اتصال و مصرف انرژی",
+  "slug": "ble-connection-parameters-power",
+  "category": "آموزش جامع BLE",
+  "summary": "از Advertising تا Connection Established پیش بروید و اثر Connection Interval، Peripheral Latency و Supervision Timeout را بر سرعت و باتری بفهمید.",
+  "seo_title": "اتصال BLE و پارامترهای Connection Interval و Latency",
+  "seo_description": "آموزش اتصال در BLE، Connection Event، Interval، Peripheral Latency و Supervision Timeout همراه با روش تنظیم برای کاهش مصرف باتری.",
+  "status": "published",
+  "stage": 6
+}

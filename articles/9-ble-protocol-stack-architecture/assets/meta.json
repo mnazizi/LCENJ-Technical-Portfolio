@@ -1,0 +1,10 @@
+{
+  "title": "معماری پروتکل BLE: از PHY و Link Layer تا L2CAP، ATT و GATT",
+  "slug": "ble-protocol-stack-architecture",
+  "category": "آموزش جامع BLE",
+  "summary": "لایه‌های BLE و مسیر عبور یک داده از اپلیکیشن تا آنتن را به زبان ساده دنبال کنید و وظیفه GAP، GATT، ATT، L2CAP و SMP را بشناسید.",
+  "seo_title": "معماری پروتکل BLE | معرفی PHY، L2CAP، ATT، GATT و SMP",
+  "seo_description": "آموزش معماری لایه‌ای Bluetooth Low Energy و وظیفه PHY، Link Layer، L2CAP، ATT، GATT، SMP و GAP از اپلیکیشن تا آنتن.",
+  "status": "published",
+  "stage": 7
+}

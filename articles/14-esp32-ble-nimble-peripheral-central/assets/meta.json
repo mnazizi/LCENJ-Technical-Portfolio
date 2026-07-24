@@ -1,0 +1,10 @@
+{
+  "title": "BLE در ESP32: انتخاب NimBLE، ساخت Peripheral و Central و ارسال Notify",
+  "slug": "esp32-ble-nimble-peripheral-central",
+  "category": "آموزش جامع BLE",
+  "summary": "پشته NimBLE و Bluedroid را مقایسه کنید و در ESP32 اسکن، اتصال، GATT Server، Read، Write، Notify و مدیریت توان را پیاده کنید.",
+  "seo_title": "آموزش BLE در ESP32 با NimBLE | Peripheral، Central و Notify",
+  "seo_description": "راهنمای عملی BLE در ESP32 و ESP32-C3؛ انتخاب NimBLE یا Bluedroid، ساخت Peripheral و Central، Scan، Connect، Read، Write و Notify.",
+  "status": "published",
+  "stage": 12
+}
