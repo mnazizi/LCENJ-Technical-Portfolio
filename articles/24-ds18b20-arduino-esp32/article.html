@@ -1,0 +1,187 @@
+<article class="ds18b20-guide" dir="rtl">
+  <header class="ds-hero">
+    <div>
+      <p class="ds-eyebrow">آموزش سنسور دما و پروتکل 1-Wire</p>
+      <h2>راه‌اندازی سنسور دمای DS18B20 با Arduino و ESP32</h2>
+      <p>در این راهنمای پروژه‌محور، از شناخت پایه‌ها و سیم‌کشی تا تایمینگ باس 1-Wire، تنظیم دقت، خواندن چند سنسور، حالت تغذیه انگلی و کدنویسی عملی را قدم‌به‌قدم یاد می‌گیرید.</p>
+      <nav class="ds-actions" aria-label="فایل‌های مقاله">
+        <a href="https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf" target="_blank" rel="noopener">دانلود دیتاشیت رسمی DS18B20 از Analog Devices</a>
+        <a href="assets/ds18b20-examples.zip" download>دانلود کدهای Arduino و ESP32</a>
+      </nav>
+    </div>
+    <img src="assets/cover.webp" alt="سنسور واقعی DS18B20 متصل به ESP32 روی بردبورد با مقاومت پول‌آپ" width="1536" height="864">
+  </header>
+
+  <section class="ds-quick" aria-label="مشخصات کلیدی DS18B20">
+    <div><strong>بازه دما</strong><span>55- تا 125+ درجه سانتی‌گراد</span></div>
+    <div><strong>دقت</strong><span>±0.5°C در بازه 10- تا 85+</span></div>
+    <div><strong>رزولوشن</strong><span>قابل تنظیم از 9 تا 12 بیت</span></div>
+    <div><strong>رابط</strong><span>1-Wire با شناسه یکتای 64 بیتی</span></div>
+  </section>
+
+  <section>
+    <h2>DS18B20 چیست و چه زمانی انتخاب خوبی است؟</h2>
+    <p>DS18B20 یک دماسنج دیجیتال کالیبره‌شده است که اندازه‌گیری را داخل تراشه انجام می‌دهد و نتیجه را به‌صورت دیجیتال روی باس 1-Wire می‌فرستد. برخلاف سنسورهای آنالوگ، طول سیم و نویز ADC مستقیماً عدد دما را تغییر نمی‌دهد. هر سنسور یک کد ROM یکتای 64 بیتی دارد؛ بنابراین چند DS18B20 می‌توانند تنها با یک پایه میکروکنترلر کار کنند.</p>
+    <div class="ds-note"><strong>نکته خرید:</strong> نمونه‌های تقلبی DS18B20 در بازار وجود دارند. اگر دقت، شناسه یکتا یا حالت تغذیه انگلی مهم است، قطعه را از تأمین‌کننده معتبر تهیه و در چند نقطه دمایی مقایسه کنید.</div>
+  </section>
+
+  <section>
+    <h2>پایه‌ها و سیم‌کشی صحیح</h2>
+    <p>در پکیج TO-92، وقتی سطح تخت بدنه رو به شماست و پایه‌ها رو به پایین‌اند، ترتیب پایه‌ها از چپ به راست چنین است:</p>
+    <div class="ds-table-wrap"><table>
+      <thead><tr><th>پایه</th><th>نام</th><th>کاربرد</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>GND</td><td>زمین مدار</td></tr>
+        <tr><td>2</td><td>DQ</td><td>داده 1-Wire؛ با مقاومت 4.7kΩ به ولتاژ منطقی Pull-up شود</td></tr>
+        <tr><td>3</td><td>VDD</td><td>تغذیه 3.0 تا 5.5 ولت؛ در حالت انگلی به GND متصل می‌شود</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ds-wiring">
+      <div><h3>Arduino Uno</h3><p>VDD به 5V، GND به GND و DQ به D2. مقاومت 4.7kΩ بین DQ و 5V قرار گیرد.</p></div>
+      <div><h3>ESP32</h3><p>VDD به 3.3V، GND به GND و DQ مثلاً به GPIO4. مقاومت 4.7kΩ بین DQ و 3.3V قرار گیرد.</p></div>
+    </div>
+    <p>برای کابل‌های بلند یا محیط صنعتی، توپولوژی خطی، کابل زوج‌تابیده، خازن بای‌پس نزدیک سنسور و Pull-up متناسب با ظرفیت باس نتیجه بهتری از اتصال ستاره‌ای می‌دهد.</p>
+  </section>
+
+  <section>
+    <h2>مودهای تغذیه: عادی و Parasite Power</h2>
+    <h3>تغذیه عادی سه‌سیمه</h3>
+    <p>VDD جداگانه وصل است و DQ فقط برای داده استفاده می‌شود. این روش برای ESP32، چند سنسور، کابل بلند و طراحی قابل اعتماد پیشنهاد می‌شود.</p>
+    <h3>تغذیه انگلی دوسیمه</h3>
+    <p>VDD به زمین وصل می‌شود و سنسور انرژی را هنگام HIGH بودن DQ در خازن داخلی ذخیره می‌کند. هنگام تبدیل دما یا نوشتن EEPROM به Strong Pull-up نیاز است؛ یک مقاومت معمولی همیشه جریان لازم را تأمین نمی‌کند. برای شروع، این حالت را کنار بگذارید و از تغذیه سه‌سیمه استفاده کنید.</p>
+  </section>
+
+  <section>
+    <h2>رزولوشن و زمان تبدیل دما</h2>
+    <p>بیت‌های R1 و R0 در رجیستر Configuration رزولوشن را مشخص می‌کنند. دقت عددی بیشتر، زمان تبدیل طولانی‌تری می‌خواهد:</p>
+    <div class="ds-table-wrap"><table>
+      <thead><tr><th>رزولوشن</th><th>گام اندازه‌گیری</th><th>حداکثر زمان تبدیل</th></tr></thead>
+      <tbody>
+        <tr><td>9 بیت</td><td>0.5°C</td><td>93.75 ms</td></tr>
+        <tr><td>10 بیت</td><td>0.25°C</td><td>187.5 ms</td></tr>
+        <tr><td>11 بیت</td><td>0.125°C</td><td>375 ms</td></tr>
+        <tr><td>12 بیت</td><td>0.0625°C</td><td>750 ms</td></tr>
+      </tbody>
+    </table></div>
+    <p>رزولوشن بالاتر به معنی دقت مطلق بهتر نیست؛ دقت تضمین‌شده در بازه اصلی ±0.5°C است. برای کنترل دمای سریع، 10 یا 11 بیت اغلب انتخاب متعادل‌تری است.</p>
+  </section>
+
+  <section>
+    <h2>تایمینگ پروتکل 1-Wire به زبان ساده</h2>
+    <p>هر تبادل با Reset شروع می‌شود. مستر باس را حداقل 480 میکروثانیه LOW می‌کند؛ سپس سنسور پس از رها شدن خط، با پالس Presence حضور خود را اعلام می‌کند. هر اسلات خواندن یا نوشتن حداقل 60 میکروثانیه است و بین اسلات‌ها حداقل 1 میکروثانیه زمان بازیابی لازم است.</p>
+    <div class="ds-timing" aria-label="خلاصه تایمینگ باس یک سیمه">
+      <div><strong>Reset</strong><span class="bar reset">LOW ≥ 480µs</span></div>
+      <div><strong>Presence</strong><span class="bar presence">شروع 15–60µs، LOW به مدت 60–240µs</span></div>
+      <div><strong>Write 1</strong><span class="bar write-one">LOW کوتاه 1–15µs</span></div>
+      <div><strong>Write 0</strong><span class="bar write-zero">LOW حدود 60µs</span></div>
+      <div><strong>Read</strong><span class="bar read">LOW کوتاه؛ نمونه‌برداری تا 15µs از شروع اسلات</span></div>
+    </div>
+    <p>در برنامه‌های معمول نیازی نیست این تأخیرها را دستی بسازید؛ کتابخانه OneWire آن‌ها را مدیریت می‌کند. دانستن تایمینگ برای عیب‌یابی با لاجیک آنالایزر، کابل‌های بلند و نوشتن درایور اختصاصی ضروری است.</p>
+  </section>
+
+  <section>
+    <h2>فرمان‌های مهم DS18B20</h2>
+    <div class="ds-table-wrap"><table>
+      <thead><tr><th>فرمان</th><th>کد</th><th>کاربرد</th></tr></thead>
+      <tbody>
+        <tr><td>Search ROM</td><td>F0h</td><td>پیدا کردن آدرس همه سنسورها روی باس</td></tr>
+        <tr><td>Match ROM</td><td>55h</td><td>انتخاب یک سنسور با آدرس 64 بیتی</td></tr>
+        <tr><td>Skip ROM</td><td>CCh</td><td>خطاب به تنها سنسور یا همه سنسورها</td></tr>
+        <tr><td>Convert T</td><td>44h</td><td>شروع تبدیل دما</td></tr>
+        <tr><td>Read Scratchpad</td><td>BEh</td><td>خواندن دما، آلارم، تنظیمات و CRC</td></tr>
+        <tr><td>Write Scratchpad</td><td>4Eh</td><td>نوشتن TH، TL و رزولوشن</td></tr>
+        <tr><td>Read Power Supply</td><td>B4h</td><td>تشخیص تغذیه عادی یا انگلی</td></tr>
+        <tr><td>Alarm Search</td><td>ECh</td><td>پیدا کردن سنسورهایی که از محدوده آلارم خارج شده‌اند</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>راه‌اندازی با Arduino</h2>
+    <ol>
+      <li>در Library Manager کتابخانه‌های <b>OneWire</b> و <b>DallasTemperature</b> را نصب کنید.</li>
+      <li>سیم DQ را به پایه D2 و مقاومت 4.7kΩ را بین DQ و 5V وصل کنید.</li>
+      <li>کد زیر را اجرا و Serial Monitor را روی 115200 تنظیم کنید.</li>
+    </ol>
+    <pre dir="ltr"><code>#include &lt;OneWire.h&gt;
+#include &lt;DallasTemperature.h&gt;
+
+#define ONE_WIRE_BUS 2
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&amp;oneWire);
+
+void setup() {
+  Serial.begin(115200);
+  sensors.begin();
+  sensors.setResolution(12);
+  Serial.printf("Sensors: %d\n", sensors.getDeviceCount());
+}
+
+void loop() {
+  sensors.requestTemperatures();
+  float c = sensors.getTempCByIndex(0);
+  if (c == DEVICE_DISCONNECTED_C) {
+    Serial.println("Sensor disconnected");
+  } else {
+    Serial.printf("Temperature: %.2f C\n", c);
+  }
+  delay(1000);
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>راه‌اندازی با ESP32 و خواندن غیرمسدودکننده</h2>
+    <p>همان دو کتابخانه روی Arduino Core for ESP32 کار می‌کنند. DQ را به GPIO4 و Pull-up را به 3.3V وصل کنید. برای جلوگیری از توقف 750 میلی‌ثانیه‌ای برنامه، تبدیل را غیرمسدودکننده انجام دهید:</p>
+    <pre dir="ltr"><code>#include &lt;OneWire.h&gt;
+#include &lt;DallasTemperature.h&gt;
+
+constexpr uint8_t ONE_WIRE_BUS = 4;
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&amp;oneWire);
+uint32_t conversionStarted = 0;
+bool converting = false;
+
+void setup() {
+  Serial.begin(115200);
+  sensors.begin();
+  sensors.setResolution(12);
+  sensors.setWaitForConversion(false);
+}
+
+void loop() {
+  if (!converting) {
+    sensors.requestTemperatures();
+    conversionStarted = millis();
+    converting = true;
+  }
+  if (converting &amp;&amp; millis() - conversionStarted &gt;= 750) {
+    float c = sensors.getTempCByIndex(0);
+    Serial.printf("Temperature: %.2f C\n", c);
+    converting = false;
+  }
+  // WiFi, UI and other tasks can run here.
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>چند سنسور روی یک پایه</h2>
+    <p>به‌جای تکیه بر Index، آدرس 8 بایتی هر سنسور را پیدا و ذخیره کنید؛ ترتیب Index ممکن است با تغییر سیم‌کشی عوض شود. کتابخانه DallasTemperature متد <code>getAddress()</code> و خواندن با <code>getTempC(address)</code> را فراهم می‌کند. در یک باس، فرمان Convert T را برای همه صادر کنید و بعد Scratchpad هر آدرس را جدا بخوانید.</p>
+  </section>
+
+  <section>
+    <h2>خطاهای رایج و روش عیب‌یابی</h2>
+    <ul>
+      <li><b>عدد -127°C:</b> معمولاً قطع بودن سنسور، پایه اشتباه یا نبود Pull-up است.</li>
+      <li><b>عدد 85°C:</b> مقدار پیش‌فرض رجیستر پس از روشن شدن است؛ تبدیل کامل نشده یا زود خوانده‌اید.</li>
+      <li><b>نوسان روی کابل بلند:</b> سیم‌کشی ستاره‌ای، Pull-up نامناسب، زمین ضعیف یا نویز منبع تغذیه را بررسی کنید.</li>
+      <li><b>چند سنسور با یک Index:</b> ROM Code هر قطعه را ذخیره و براساس آدرس بخوانید.</li>
+      <li><b>خطای داده:</b> بایت نهم Scratchpad شامل CRC است؛ در کاربرد مطمئن، CRC را بررسی و در صورت خطا دوباره بخوانید.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>جمع‌بندی و ادامه مسیر</h2>
+    <p>برای یک پروژه مطمئن با ESP32، تغذیه سه‌سیمه 3.3 ولت، مقاومت 4.7kΩ، خواندن غیرمسدودکننده و بررسی CRC نقطه شروع مناسبی است. برای یادگیری سنسورهای بیشتر به <a class="ds-related" href="/learning/sensors/">مرکز آموزش سنسورها</a> و <a class="ds-related" href="/learning/sensors/temperature-humidity/">آموزش سنسورهای دما و رطوبت</a> سر بزنید.</p>
+    <p class="ds-source">مرجع فنی: دیتاشیت رسمی DS18B20 Rev. 6 از Analog Devices / Maxim Integrated.</p>
+  </section>
+</article>

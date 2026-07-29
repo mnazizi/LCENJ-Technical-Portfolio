@@ -5,7 +5,7 @@
 ![معماری پروتکل BLE: از PHY و Link Layer تا L2CAP، ATT و GATT](assets/cover.webp)
 
 - دسته‌بندی: آموزش جامع BLE
-- آخرین بروزرسانی: 2026-07-15T07:39:42.536173
+- آخرین بروزرسانی: 2026-07-26T06:10:02.827145
 - نسخه اصلی در سایت: [https://lcenj.ir/learning/9/ble-protocol-stack-architecture](https://lcenj.ir/learning/9/ble-protocol-stack-architecture)
 
 ## متن مقاله

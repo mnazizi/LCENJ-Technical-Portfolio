@@ -5,7 +5,7 @@
 ![BLE در STM32WB: راه‌اندازی CubeMX، ساخت Service و Low Power](assets/cover.webp)
 
 - دسته‌بندی: آموزش جامع BLE
-- آخرین بروزرسانی: 2026-07-22T10:01:33.481935
+- آخرین بروزرسانی: 2026-07-24T14:21:50.676508
 - نسخه اصلی در سایت: [https://lcenj.ir/learning/15/stm32wb-ble-cubemx-service-notify](https://lcenj.ir/learning/15/stm32wb-ble-cubemx-service-notify)
 
 ## متن مقاله

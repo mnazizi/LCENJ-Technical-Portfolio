@@ -5,7 +5,7 @@ UUIDهای استاندارد و اختصاصی را بشناسید، سرویس
 ![UUID در BLE: تفاوت UUID16، UUID32 و UUID128 و طراحی سرویس اختصاصی](assets/cover.webp)
 
 - دسته‌بندی: آموزش جامع BLE
-- آخرین بروزرسانی: 2026-07-18T05:15:30.336810
+- آخرین بروزرسانی: 2026-07-24T14:21:58.258857
 - نسخه اصلی در سایت: [https://lcenj.ir/learning/12/ble-uuid-standard-custom-service](https://lcenj.ir/learning/12/ble-uuid-standard-custom-service)
 
 ## متن مقاله

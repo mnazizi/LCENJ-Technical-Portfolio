@@ -5,7 +5,7 @@ MTU، Data Length، PHY و Connection Parameter را هماهنگ تنظیم ک�
 ![بهینه‌سازی BLE: افزایش Throughput و کاهش Latency و مصرف باتری](assets/cover.webp)
 
 - دسته‌بندی: آموزش جامع BLE
-- آخرین بروزرسانی: 2026-07-18T01:29:18.780578
+- آخرین بروزرسانی: 2026-07-24T14:21:44.292919
 - نسخه اصلی در سایت: [https://lcenj.ir/learning/17/ble-performance-throughput-latency-power](https://lcenj.ir/learning/17/ble-performance-throughput-latency-power)
 
 ## متن مقاله
