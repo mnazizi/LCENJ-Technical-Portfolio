@@ -2,6 +2,8 @@
 
 نسخه GitHub مقاله‌های منتشرشده در وب‌سایت LCENJ.
 
+- [سنسور نور LDR چیست؟ نحوه کار، کاربردها و راه‌اندازی](26-ldr/README.md) - [نمایش در سایت](https://lcenj.ir/learning/26/سنسور-نور-ldr-چیست؟-نحوه-کار،-کاربردها-و-راه-اندازی)
+- [آموزش کامل سنسور SHT31 با ESP32 و Arduino](25-sht31-esp32-arduino-i2c/README.md) - [نمایش در سایت](https://lcenj.ir/learning/25/sht31-esp32-arduino-i2c)
 - [آموزش کامل سنسور دمای DS18B20 با Arduino و ESP32](24-ds18b20-arduino-esp32/README.md) - [نمایش در سایت](https://lcenj.ir/learning/24/ds18b20-arduino-esp32)
 - [آموزش MOSFET با مثال عملی؛ NMOS و PMOS](23-mosfet-------nmos---pmos/README.md) - [نمایش در سایت](https://lcenj.ir/learning/23/آموزش-mosfet-با-مثال-عملی؛-nmos-و-pmos)
 - [معماری پروتکل BLE: از PHY و Link Layer تا L2CAP، ATT و GATT](9-ble-protocol-stack-architecture/README.md) - [نمایش در سایت](https://lcenj.ir/learning/9/ble-protocol-stack-architecture)

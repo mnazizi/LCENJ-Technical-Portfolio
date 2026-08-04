@@ -1,0 +1,241 @@
+<article class="sht31-guide" dir="rtl">
+  <header class="sht31-hero">
+    <div class="sht31-hero-copy">
+      <p class="sht31-eyebrow">آموزش سنسور دما و رطوبت دیجیتال</p>
+      <h2>راه‌اندازی سنسور SHT31 با ESP32 و Arduino</h2>
+      <p>در این راهنمای جامع، ماژول SHT31 را از روی دیتاشیت رسمی Sensirion می‌شناسیم، سیم‌کشی و I2C را انجام می‌دهیم، دما و رطوبت را با کتابخانه و بدون کتابخانه می‌خوانیم و با CRC، Heater، خطاهای اندازه‌گیری و اصول نصب درست آشنا می‌شویم.</p>
+      <nav class="sht31-actions" aria-label="فایل‌ها و منابع مقاله">
+        <a href="https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf" target="_blank" rel="noopener noreferrer">دیتاشیت رسمی SHT3x-DIS</a>
+        <a href="assets/sht31-examples.zip" download>دانلود کدهای Arduino و ESP32</a>
+      </nav>
+    </div>
+    <img src="assets/cover.webp" alt="ماژول واقعی سنسور دما و رطوبت SHT31 با پایه‌های VIN و GND و SCL و SDA" width="539" height="478">
+  </header>
+
+  <section class="sht31-quick" aria-label="مشخصات کلیدی SHT31">
+    <div><strong>دقت رطوبت</strong><span>تیپیک ±2 %RH</span></div>
+    <div><strong>دقت دما</strong><span>تیپیک ±0.2°C</span></div>
+    <div><strong>رابط</strong><span>I2C تا 1MHz</span></div>
+    <div><strong>آدرس</strong><span><bdi>0x44</bdi> یا <bdi>0x45</bdi></span></div>
+  </section>
+
+  <section id="introduction">
+    <h2>SHT31 چیست و چه کاربردهایی دارد؟</h2>
+    <p>SHT31-DIS یک سنسور دیجیتال کالیبره‌شده برای اندازه‌گیری هم‌زمان دما و رطوبت نسبی است. خروجی دیجیتال، جبران‌سازی داخلی، اندازه کوچک و دقت مناسب باعث شده این قطعه در دیتالاگرها، ترموستات، گلخانه، تجهیزات پزشکی غیرتشخیصی، انبار، تهویه مطبوع، ایستگاه هواشناسی و پروژه‌های IoT استفاده شود.</p>
+    <p>این خانواده چند عضو دارد. SHT30، SHT31 و SHT35 از نظر فرمان‌های ارتباطی بسیار شبیه‌اند، اما حدود دقت آن‌ها یکسان نیست. هنگام خرید، نوشته روی قطعه و شماره دقیق سفارش را بررسی کنید؛ نام عمومی «SHT3x» به‌تنهایی برای نتیجه‌گیری درباره دقت کافی نیست.</p>
+    <aside class="sht31-note"><strong>قطعه خام یا ماژول؟</strong> مشخصات 2.15 تا 5.5 ولت مربوط به تراشه خام است. بعضی بردهای آماده رگولاتور، مبدل سطح یا مقاومت Pull-up دارند و بعضی ندارند. قبل از اتصال، شماتیک یا مسیرهای روی همان ماژول را بررسی کنید.</aside>
+  </section>
+
+  <section id="datasheet-reading">
+    <h2>چطور دیتاشیت SHT31 را درست بخوانیم؟</h2>
+    <p>برای انتخاب سنسور فقط به یک عدد بزرگ روی صفحه فروشگاه اکتفا نکنید. جدول‌های Electrical Specifications را همراه با شرایط آزمون بخوانید:</p>
+    <div class="sht31-reading-grid">
+      <article><h3>Accuracy یا دقت</h3><p>فاصله اندازه‌گیری سنسور از مقدار واقعی است. مقدار تیپیک SHT31 برای رطوبت ±2 %RH و برای دما در بخش اصلی بازه ±0.2°C است؛ نمودار دقت نشان می‌دهد این عدد در همه دماها یکسان نیست.</p></article>
+      <article><h3>Repeatability یا تکرارپذیری</h3><p>پراکندگی چند اندازه‌گیری پشت‌سرهم است، نه دقت مطلق. در حالت High، تکرارپذیری رطوبت 0.08 %RH و دما 0.04°C است.</p></article>
+      <article><h3>Resolution یا تفکیک‌پذیری</h3><p>کوچک‌ترین گام عدد خروجی است. رزولوشن 0.01°C به معنی دقت 0.01°C نیست؛ دقت واقعی را جدول Accuracy تعیین می‌کند.</p></article>
+      <article><h3>Response و Drift</h3><p>زمان پاسخ رطوبت حدود 8 ثانیه و زمان پاسخ دما بیش از 2 ثانیه ذکر شده است. رانش بلندمدت رطوبت در شرایط عادی معمولاً کمتر از 0.25 %RH در سال است.</p></article>
+    </div>
+    <figure class="sht31-figure">
+      <img src="assets/datasheet-accuracy.webp" alt="بازطراحی نمودارها و مشخصات دقت SHT31 بر اساس دیتاشیت Sensirion" width="1400" height="800" loading="lazy">
+      <figcaption>خلاصه تصویری دقت، تکرارپذیری و محدوده توصیه‌شده؛ بازطراحی‌شده بر اساس دیتاشیت رسمی Sensirion.</figcaption>
+    </figure>
+    <div class="sht31-table-wrap"><table>
+      <thead><tr><th>پارامتر</th><th>مقدار مهم</th><th>برداشت عملی</th></tr></thead>
+      <tbody>
+        <tr><td>بازه رطوبت</td><td><bdi>0 تا 100 %RH</bdi></td><td>کارکرد طولانی خارج از 20 تا 80 %RH می‌تواند جابه‌جایی موقت خروجی ایجاد کند.</td></tr>
+        <tr><td>بازه دما</td><td><bdi>-40 تا +125°C</bdi></td><td>دقت در لبه‌های بازه کمتر از محدوده معمول اتاق است؛ نمودار دقت را بخوانید.</td></tr>
+        <tr><td>Hysteresis رطوبت</td><td>حدود <bdi>±0.8 %RH</bdi></td><td>در مسیر افزایش و کاهش رطوبت، خروجی دقیقاً روی یک منحنی قرار نمی‌گیرد.</td></tr>
+        <tr><td>زمان اندازه‌گیری High</td><td>تیپیک 12.5ms، حداکثر 15ms</td><td>در حالت Single-shot پیش از خواندن داده باید تبدیل کامل شود.</td></tr>
+        <tr><td>جریان هنگام اندازه‌گیری</td><td>تیپیک 600µA</td><td>برای باتری، نرخ نمونه‌برداری و حالت Single-shot را متناسب انتخاب کنید.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="pinout-wiring">
+    <h2>پایه‌ها، آدرس I2C و سیم‌کشی</h2>
+    <figure class="sht31-figure">
+      <img src="assets/datasheet-pinout.webp" alt="نمودار پایه‌های SHT31 و سیم‌کشی I2C با ESP32 و Arduino" width="1400" height="800" loading="lazy">
+      <figcaption>پایه‌های تراشه و اتصال پیشنهادی ماژول؛ خازن 100nF باید نزدیک VDD و VSS تراشه قرار بگیرد.</figcaption>
+    </figure>
+    <div class="sht31-table-wrap"><table>
+      <thead><tr><th>پایه ماژول</th><th>Arduino Uno</th><th>ESP32</th><th>توضیح</th></tr></thead>
+      <tbody>
+        <tr><td>VIN / VCC</td><td>5V یا 3.3V مطابق ماژول</td><td>ترجیحاً 3.3V</td><td>ولتاژ مجاز برد آماده را از فروشنده یا شماتیک بررسی کنید.</td></tr>
+        <tr><td>GND</td><td>GND</td><td>GND</td><td>زمین مشترک مدار</td></tr>
+        <tr><td>SDA</td><td>A4</td><td>پایه SDA برد؛ اغلب GPIO21</td><td>خط داده I2C با Pull-up</td></tr>
+        <tr><td>SCL</td><td>A5</td><td>پایه SCL برد؛ اغلب GPIO22</td><td>خط کلاک I2C با Pull-up</td></tr>
+      </tbody>
+    </table></div>
+    <p>SDA و SCL خروجی Open-drain هستند و به مقاومت Pull-up نیاز دارند. بسیاری از ماژول‌ها این مقاومت‌ها را نصب کرده‌اند. موازی شدن Pull-up چند ماژول مقاومت معادل را کم می‌کند و ممکن است به باس فشار بیاورد. مقدار مناسب به ولتاژ، فرکانس و ظرفیت کل باس بستگی دارد.</p>
+    <p>پایه ADDR آدرس را تعیین می‌کند: اتصال به VSS معمولاً آدرس <code>0x44</code> و اتصال به VDD آدرس <code>0x45</code> می‌دهد. این قابلیت اجازه می‌دهد دو SHT31 روی یک باس استفاده شوند.</p>
+  </section>
+
+  <section id="protocol">
+    <h2>حالت‌های اندازه‌گیری و فرمان‌های مهم</h2>
+    <p>در حالت Single-shot، میکروکنترلر یک فرمان می‌فرستد، سنسور یک بار اندازه‌گیری می‌کند و سپس داده خوانده می‌شود. این حالت برای مصرف پایین و نمونه‌برداری آرام مناسب است. در حالت Periodic، سنسور با نرخ 0.5 تا 10 نمونه بر ثانیه اندازه‌گیری می‌کند و نتیجه با فرمان Fetch Data خوانده می‌شود.</p>
+    <div class="sht31-table-wrap"><table>
+      <thead><tr><th>حالت Single-shot</th><th>High</th><th>Medium</th><th>Low</th></tr></thead>
+      <tbody>
+        <tr><td>Clock stretching غیرفعال</td><td><code>0x2400</code></td><td><code>0x240B</code></td><td><code>0x2416</code></td></tr>
+        <tr><td>Clock stretching فعال</td><td><code>0x2C06</code></td><td><code>0x2C0D</code></td><td><code>0x2C10</code></td></tr>
+      </tbody>
+    </table></div>
+    <p>برای شکستن حالت Periodic از <code>0x3093</code> و برای Soft Reset از <code>0x30A2</code> استفاده می‌شود. در نرخ‌های بالا، اندازه‌گیری پیوسته می‌تواند تراشه را کمی گرم کند و دمای خوانده‌شده را بالا ببرد؛ نرخ را فقط به اندازه نیاز پروژه انتخاب کنید.</p>
+  </section>
+
+  <section id="data-crc">
+    <h2>ساختار داده، تبدیل مقدار خام و CRC</h2>
+    <figure class="sht31-figure">
+      <img src="assets/datasheet-measurement.webp" alt="ساختار شش بایت داده SHT31 شامل دما و رطوبت و CRC" width="1400" height="800" loading="lazy">
+      <figcaption>پاسخ اندازه‌گیری شامل دو بایت دما، CRC دما، دو بایت رطوبت و CRC رطوبت است.</figcaption>
+    </figure>
+    <p>پس از فرمان اندازه‌گیری، شش بایت خوانده می‌شود. مقدار خام 16 بیتی با رابطه‌های زیر تبدیل می‌شود:</p>
+    <pre dir="ltr"><code>temperatureC = -45.0 + 175.0 * rawTemperature / 65535.0;
+relativeHumidity = 100.0 * rawHumidity / 65535.0;</code></pre>
+    <p>برای اطمینان از سالم بودن انتقال، هر دو بخش CRC جداگانه دارند. CRC-8 این خانواده با چندجمله‌ای <code>0x31</code> و مقدار آغازین <code>0xFF</code> محاسبه می‌شود. در محصول واقعی، به‌خصوص روی کابل بلند، حذف بررسی CRC تصمیم درستی نیست.</p>
+  </section>
+
+  <section id="arduino-code">
+    <h2>راه‌اندازی Arduino با کتابخانه Adafruit SHT31</h2>
+    <ol>
+      <li>در Library Manager عبارت <b>Adafruit SHT31</b> را نصب کنید.</li>
+      <li>اتصالات I2C را انجام دهید و ابتدا آدرس <code>0x44</code> را امتحان کنید.</li>
+      <li>Serial Monitor را روی 115200 قرار دهید.</li>
+    </ol>
+    <pre dir="ltr"><code>#include &lt;Wire.h&gt;
+#include &lt;Adafruit_SHT31.h&gt;
+
+Adafruit_SHT31 sht31 = Adafruit_SHT31();
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  if (!sht31.begin(0x44)) {
+    Serial.println("SHT31 not found");
+    while (true) delay(10);
+  }
+}
+
+void loop() {
+  const float temperature = sht31.readTemperature();
+  const float humidity = sht31.readHumidity();
+
+  if (!isnan(temperature) &amp;&amp; !isnan(humidity)) {
+    Serial.printf("T: %.2f C | RH: %.2f %%\n", temperature, humidity);
+  } else {
+    Serial.println("Read error");
+  }
+  delay(2000);
+}</code></pre>
+  </section>
+
+  <section id="esp32-raw-code">
+    <h2>خواندن مستقیم SHT31 با ESP32 و Wire</h2>
+    <p>کد زیر فرمان High repeatability بدون Clock stretching را می‌فرستد، 15 میلی‌ثانیه صبر می‌کند، شش بایت را می‌خواند و CRC هر بخش را کنترل می‌کند. در بردهایی که پایه پیش‌فرض I2C متفاوت است، از <code>Wire.begin(SDA_PIN, SCL_PIN)</code> استفاده کنید.</p>
+    <pre dir="ltr"><code>#include &lt;Wire.h&gt;
+
+constexpr uint8_t SHT31_ADDRESS = 0x44;
+
+uint8_t crc8(const uint8_t *data, size_t len) {
+  uint8_t crc = 0xFF;
+  for (size_t i = 0; i &lt; len; ++i) {
+    crc ^= data[i];
+    for (uint8_t bit = 0; bit &lt; 8; ++bit)
+      crc = (crc &amp; 0x80) ? (crc &lt;&lt; 1) ^ 0x31 : (crc &lt;&lt; 1);
+  }
+  return crc;
+}
+
+bool readSHT31(float &amp;t, float &amp;rh) {
+  Wire.beginTransmission(SHT31_ADDRESS);
+  Wire.write(0x24);
+  Wire.write(0x00);
+  if (Wire.endTransmission() != 0) return false;
+
+  delay(15);
+  if (Wire.requestFrom(SHT31_ADDRESS, (uint8_t)6) != 6) return false;
+  uint8_t data[6];
+  for (uint8_t &amp;byte : data) byte = Wire.read();
+  if (crc8(data, 2) != data[2] || crc8(data + 3, 2) != data[5]) return false;
+
+  const uint16_t rawT = (uint16_t(data[0]) &lt;&lt; 8) | data[1];
+  const uint16_t rawRH = (uint16_t(data[3]) &lt;&lt; 8) | data[4];
+  t = -45.0f + 175.0f * rawT / 65535.0f;
+  rh = 100.0f * rawRH / 65535.0f;
+  return true;
+}
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+}
+
+void loop() {
+  float temperature, humidity;
+  if (readSHT31(temperature, humidity))
+    Serial.printf("T: %.2f C | RH: %.2f %%\n", temperature, humidity);
+  else
+    Serial.println("I2C or CRC error");
+  delay(2000);
+}</code></pre>
+  </section>
+
+  <section id="heater-installation">
+    <h2>Heater، نصب مکانیکی و خطاهای واقعی اندازه‌گیری</h2>
+    <p>گرم‌کن داخلی برای بررسی و مدیریت شرایط خاص مانند میعان طراحی شده است؛ روشن بودن آن دمای خود سنسور را افزایش می‌دهد و در همان زمان، عدد دمای محیط و رطوبت معتبر نیست. Heater را دائماً روشن نگذارید و آن را جایگزین طراحی مکانیکی درست نکنید.</p>
+    <ul>
+      <li>سنسور را از رگولاتور، پردازنده، نمایشگر و مسیرهای پرجریان دور کنید.</li>
+      <li>جریان هوای محیط باید به سنسور برسد؛ قرار دادن آن در محفظه بسته، پاسخ را کند می‌کند.</li>
+      <li>بخار مواد شیمیایی، چسب، حلال و سیلیکون می‌تواند روی عنصر رطوبت اثر بگذارد.</li>
+      <li>در کاربرد بیرونی از فیلتر مناسب و محافظ در برابر قطره مستقیم آب استفاده کنید.</li>
+      <li>برای کابل بلند، سرعت I2C را کاهش دهید یا از قرار دادن I2C خام روی کابل بلند خودداری کنید.</li>
+    </ul>
+    <aside class="sht31-note"><strong>محدوده توصیه‌شده:</strong> دیتاشیت برای پایداری بلندمدت، ناحیه معمول 5 تا 60°C و 20 تا 80 %RH را توصیه می‌کند. ماندن طولانی در رطوبت بالاتر از 80 درصد می‌تواند آفست مثبت موقت ایجاد کند.</aside>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>خطاهای رایج و عیب‌یابی</h2>
+    <div class="sht31-table-wrap"><table>
+      <thead><tr><th>نشانه</th><th>علت‌های محتمل</th><th>راه‌حل</th></tr></thead>
+      <tbody>
+        <tr><td>سنسور پیدا نمی‌شود</td><td>آدرس اشتباه، جابه‌جایی SDA/SCL، نبود زمین مشترک</td><td>اسکنر I2C را اجرا و آدرس‌های 0x44 و 0x45 را بررسی کنید.</td></tr>
+        <tr><td>دما بیشتر از محیط است</td><td>گرمای برد، نرخ نمونه‌برداری زیاد یا Heater روشن</td><td>فاصله حرارتی، نرخ کمتر و وضعیت Heater را بررسی کنید.</td></tr>
+        <tr><td>رطوبت ثابت یا غیرعادی</td><td>محفظه بسته، آلودگی شیمیایی یا میعان</td><td>تهویه، جانمایی و شرایط نگهداری سنسور را اصلاح کنید.</td></tr>
+        <tr><td>خطای تصادفی</td><td>Pull-up نامناسب، کابل بلند، نویز یا تغذیه ضعیف</td><td>CRC، خازن 100nF، شکل موج I2C و زمین را بررسی کنید.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="comparison">
+    <h2>مقایسه SHT31 با DHT22، BME280 و DS18B20</h2>
+    <div class="sht31-table-wrap"><table>
+      <thead><tr><th>سنسور</th><th>اندازه‌گیری</th><th>مزیت اصلی</th><th>مناسب برای</th></tr></thead>
+      <tbody>
+        <tr><td>SHT31</td><td>دما و رطوبت</td><td>دقت، پاسخ و رابط I2C مناسب</td><td>اندازه‌گیری قابل اعتماد دما و رطوبت</td></tr>
+        <tr><td>DHT22</td><td>دما و رطوبت</td><td>سادگی و قیمت پایین</td><td>پروژه آموزشی با نرخ پایین</td></tr>
+        <tr><td>BME280</td><td>دما، رطوبت، فشار</td><td>اندازه‌گیری فشار هوا</td><td>ایستگاه هواشناسی و ارتفاع نسبی</td></tr>
+        <tr><td>DS18B20</td><td>فقط دما</td><td>1-Wire، چند سنسور و نسخه ضدآب</td><td>اندازه‌گیری نقطه‌ای دما و کابل بلندتر</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="faq">
+    <h2>پرسش‌های متداول</h2>
+    <details><summary>آیا SHT31 مستقیماً با ESP32 سازگار است؟</summary><p>بله. تراشه با 3.3 ولت کار می‌کند و I2C آن با ESP32 سازگار است. Pull-up باس باید به 3.3 ولت متصل باشد.</p></details>
+    <details><summary>چرا رزولوشن 0.01 درجه با دقت ±0.2 درجه فرق دارد؟</summary><p>رزولوشن تعداد رقم‌های خروجی را مشخص می‌کند؛ دقت نشان می‌دهد خروجی تا چه اندازه به مقدار واقعی نزدیک است.</p></details>
+    <details><summary>آیا می‌توان دو SHT31 را روی یک باس بست؟</summary><p>بله؛ یکی را روی آدرس 0x44 و دیگری را با تنظیم ADDR روی 0x45 قرار دهید.</p></details>
+    <details><summary>آیا Heater باید همیشه فعال باشد؟</summary><p>خیر. Heater سنسور را گرم می‌کند و هنگام فعالیت آن، اندازه‌گیری دمای محیط و رطوبت قابل اتکا نیست.</p></details>
+  </section>
+
+  <section id="resources">
+    <h2>منابع و ادامه مسیر</h2>
+    <ul class="sht31-resources">
+      <li><a href="https://sensirion.com/media/documents/213E6A3B/63A5A569/Datasheet_SHT3x_DIS.pdf" target="_blank" rel="noopener noreferrer">دیتاشیت رسمی خانواده SHT3x-DIS از Sensirion</a></li>
+      <li><a href="https://sensirion.com/products/catalog/SHT31-DIS-B" target="_blank" rel="noopener noreferrer">صفحه رسمی محصول SHT31-DIS-B</a></li>
+      <li><a href="/learning/24/ds18b20-arduino-esp32">آموزش سنسور دمای DS18B20 با Arduino و ESP32</a></li>
+      <li><a href="/learning/sensors/temperature-humidity/">مقاله‌های سنسورهای دما و رطوبت</a></li>
+      <li><a href="/learning/sensors/">مرکز آموزش سنسورها</a></li>
+    </ul>
+    <p class="sht31-source">اعداد فنی این مقاله با Datasheet SHT3x-DIS نسخه 7، دسامبر 2022 تطبیق داده شده‌اند. مشخصات ماژول آماده ممکن است با تراشه خام تفاوت داشته باشد.</p>
+  </section>
+</article>
